@@ -34,3 +34,29 @@ Once the raw data exists in the cloud database, you'll need to run another comma
 ```
 make create-secondary-tables
 ```
+
+### Run the API
+
+For local development, you'll need to create a Python environment and install dependencies.
+
+```bash
+python -m venv env
+source env/bin/activate
+pip install -r requirements.txt
+```
+
+You can then run the following command from within the new environment:
+
+```bash
+uvicorn src.app.main:app --reload
+```
+
+For web deployments, a `Dockerfile` is provided.
+
+### Use the API
+
+The following URL pattern will return the lowest-stress route between any two nodes in the network as a geojson. In this example the route starts at node ID `735340` and ends at node ID `735389`.
+
+```
+http://localhost:8000/api/lowstress/route/?start=735340&end=735389
+```
