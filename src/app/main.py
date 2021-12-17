@@ -26,8 +26,8 @@ app.add_middleware(
 
 
 
-@app.get(URL_PREFIX + "/flows/")
-async def get_flows(start: int = Query(None), end: int = Query(None),):
+@app.get(URL_PREFIX + "/route/")
+async def get_lowest_stress_route(start: int = Query(None), end: int = Query(None),):
     query = f"""
         select
             seq,
