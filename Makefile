@@ -10,13 +10,15 @@ all:
 	@echo -----------------------
 
 
-prep-database:
-	psql ${DATABASE_URL} -c 'CREATE EXTENSION IF NOT EXISTS postgis;'
-	psql ${DATABASE_URL} -c 'CREATE EXTENSION IF NOT EXISTS pgrouting;'
+prep-local-db:
+	psql ${LOCAL_DATABASE_URL} -c 'CREATE EXTENSION IF NOT EXISTS postgis;'
+	shp2pgsql -I -s 26918 ${SHP_PATH} existing_lts | psql ${LOCAL_DATABASE_URL}
 
+prep-remote-db:
+	psql ${REMOTE_DATABASE_URL} -c 'CREATE EXTENSION IF NOT EXISTS postgis;'
+	pg_dump --no-owner --no-acl ${LOCAL_DATABASE_URL} | psql ${REMOTE_DATABASE_URL}
+	psql ${REMOTE_DATABASE_URL} -c 'CREATE EXTENSION IF NOT EXISTS pgrouting;'
 
-import-data-from-dvrpc-portal-to-postgres: prep-database
-	wget -O existing_lts.geojson https://opendata.arcgis.com/datasets/553b8f833da94bec99e64a28be12f34d_0.geojson
-	ogr2ogr -f "ESRI Shapefile" existing_lts.shp existing_lts.geojson
-	shp2pgsql -I -s 4326 existing_lts.shp existing_lts | psql ${DATABASE_URL}
-
+create-secondary-tables:
+	psql ${REMOTE_DATABASE_URL} -f ./src/scripts/generate_pgrouting_network.sql
+	psql ${REMOTE_DATABASE_URL} -f ./src/scripts/generate_network_nodes.sql
