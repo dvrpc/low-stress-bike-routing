@@ -1,7 +1,6 @@
 import json
 import asyncpg
 import shapely
-import pandas
 import geopandas
 
 

@@ -1,7 +1,6 @@
 import os
 from dotenv import find_dotenv, load_dotenv
 
-from typing import List
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 
