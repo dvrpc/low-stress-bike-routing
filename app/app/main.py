@@ -9,7 +9,7 @@ from .database import postgis_query_to_geojson
 
 load_dotenv(find_dotenv())
 
-DATABASE_URL = os.getenv("REMOTE_DATABASE_URL", None)
+DATABASE_URL = os.getenv("DATABASE_URL", None)
 URL_PREFIX = os.getenv("URL_PREFIX", "")
 
 app = FastAPI(docs_url=URL_PREFIX)
