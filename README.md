@@ -48,7 +48,7 @@ pip install -r requirements.txt
 You can then run the following command from within the new environment:
 
 ```bash
-uvicorn src.app.main:app --reload
+uvicorn app.app.main:app --reload
 ```
 
 For web deployments, a `Dockerfile` is provided.
