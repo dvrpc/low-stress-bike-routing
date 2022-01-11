@@ -20,5 +20,5 @@ prep-remote-db:
 	psql ${REMOTE_DATABASE_URL} -c 'CREATE EXTENSION IF NOT EXISTS pgrouting;'
 
 create-secondary-tables:
-	psql ${REMOTE_DATABASE_URL} -f ./src/scripts/generate_pgrouting_network.sql
-	psql ${REMOTE_DATABASE_URL} -f ./src/scripts/generate_network_nodes.sql
+	psql ${REMOTE_DATABASE_URL} -f ./app/scripts/generate_pgrouting_network.sql
+	psql ${REMOTE_DATABASE_URL} -f ./app/scripts/generate_network_nodes.sql
