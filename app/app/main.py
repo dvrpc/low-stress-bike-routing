@@ -111,6 +111,7 @@ async def get_nearest_node_to_lon_lat(
     lat: float = Query(None),
     dist_meters: float = Query(None),
     max_dist_meters: float = Query(804.672),
+    dist_increment: float = Query(100.0),
 ):
     """
     Find the nearest network node to a given lon/lat, within the requested distance (in meters).
@@ -123,7 +124,7 @@ async def get_nearest_node_to_lon_lat(
     # If the initial query returns nothing, continue to run the query
     # until a result is found or the search distance exceeds the maximum search distance
     while len(result["features"]) < 1 and dist_meters < max_dist_meters:
-        dist_meters += 100
+        dist_meters += dist_increment
         result = await find_nearest_node(lon, lat, dist_meters)
 
     return result
