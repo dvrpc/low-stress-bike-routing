@@ -68,15 +68,16 @@ async def get_lowest_stress_route(
     )
 
 
-@app.get(URL_PREFIX + "/nearest-node/")
-async def get_nearest_node_to_lon_lat(
-    lon: float = Query(None),
-    lat: float = Query(None),
-    dist_meters: float = Query(None),
-):
+async def find_nearest_node(
+    lon: float,
+    lat: float,
+    dist_meters: float,
+) -> dict:
     """
-    Find the nearest network node to a given lon/lat, within the requested distance (in meters)
+    Business logic to find the closest node to a given lon/lat
+    within a specific search distance in meters.
     """
+
     query = f"""
         with user_point as (
             select ST_SetSRID(
@@ -102,3 +103,27 @@ async def get_nearest_node_to_lon_lat(
         ["nodeid", "geometry", "match_distance"],
         DATABASE_URL,
     )
+
+
+@app.get(URL_PREFIX + "/nearest-node/")
+async def get_nearest_node_to_lon_lat(
+    lon: float = Query(None),
+    lat: float = Query(None),
+    dist_meters: float = Query(None),
+    max_dist_meters: float = Query(804.672),
+):
+    """
+    Find the nearest network node to a given lon/lat, within the requested distance (in meters).
+    Run this query until the nearest node is found, or the search distance exceeds the requested
+    maximum distance, whichever comes first.
+    """
+
+    result = await find_nearest_node(lon, lat, dist_meters)
+
+    # If the initial query returns nothing, continue to run the query
+    # until a result is found or the search distance exceeds the maximum search distance
+    while len(result["features"]) < 1 and dist_meters < max_dist_meters:
+        dist_meters += 100
+        result = await find_nearest_node(lon, lat, dist_meters)
+
+    return result
