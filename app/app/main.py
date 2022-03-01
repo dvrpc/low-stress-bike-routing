@@ -36,6 +36,7 @@ async def get_lowest_stress_route(
         select
             seq,
             edge as id,
+            b.len_feet,
             b.geom as geometry
         from
             pgr_dijkstra(
