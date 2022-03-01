@@ -21,4 +21,5 @@ prep-remote-db:
 
 create-secondary-tables:
 	psql ${REMOTE_DATABASE_URL} -f ./app/scripts/generate_pgrouting_network.sql
+	psql ${REMOTE_DATABASE_URL} -f ./app/scripts/generate_pgrouting_network_heavyhanded.sql
 	psql ${REMOTE_DATABASE_URL} -f ./app/scripts/generate_network_nodes.sql
