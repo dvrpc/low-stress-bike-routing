@@ -28,10 +28,19 @@ app.add_middleware(
 async def get_lowest_stress_route(
     start: int = Query(None),
     end: int = Query(None),
+    lts_table: str = Query("normal"),
 ):
     """
     Compute a pgrouting route solve using the request start and end node ID values
+
+    There are two options for source table. Unless the user asks for 'heavyhanded', they will be forced to use the 'normal' table.
     """
+
+    if lts_table == "heavyhanded":
+        tablename = "lts_ways_heavyhanded"
+    else:
+        tablename = "lts_ways"
+
     query = f"""
         select
             seq,
@@ -48,7 +57,7 @@ async def get_lowest_stress_route(
                     cost,
                     reverse_cost
                 from
-                    lts_ways
+                    {tablename}
                 ',
                 {start},
                 {end},
@@ -64,7 +73,7 @@ async def get_lowest_stress_route(
 
     return await postgis_query_to_geojson(
         query,
-        ["seq", "id", "geometry"],
+        ["seq", "id", "len_feet", "geometry"],
         DATABASE_URL,
     )
 
