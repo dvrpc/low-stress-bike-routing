@@ -64,7 +64,7 @@ async def get_lowest_stress_route(
                 directed => true
             ) as a
         join
-            lts_ways as b
+            {tablename} as b
         on
             (a.edge = b.id)
         order by
