@@ -18,4 +18,4 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           dokku-host: ${{ secrets.DOKKU_HOST }}
           app-name: ${{ secrets.DOKKU_APP_NAME }}
-          remote-branch: master
+          remote-branch: main
