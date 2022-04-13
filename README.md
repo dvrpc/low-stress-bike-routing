@@ -1,6 +1,6 @@
 # low-stress-bike-routing
 
-backend that provides low-stress bike routes for the DVRPC region
+This app is a FastAPI backend that provides low-stress bike routes for the DVRPC region using `pgrouting` queries within a `PostGIS` database. It uses DVRPC's [LTS GIS data](https://dvrpc-dvrpcgis.opendata.arcgis.com/datasets/dvrpcgis::bicycle-lts-network/about) as the analysis network.
 
 ## Requirements
 
@@ -14,7 +14,10 @@ Create a `.env` file that defines the following variables:
 LOCAL_DATABASE_URL=postgresql://user:pass@localhost:5432/dbname
 REMOTE_DATABASE_URL=postgresql://user:pass@hostname:port/dbname
 SHP_PATH=/path/to/existing_conditions_lts.shp
+DATABASE_URL=postgresql://user:pass@localhost:5432/dbname
 ```
+
+Note: the `DATABASE_URL` variable is used by the FastAPI app, and can point to a local or cloud-hosted database. It should be your `LOCAL_` or `REMOTE_` database URL.
 
 ## Commands
 
