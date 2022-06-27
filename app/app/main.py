@@ -46,6 +46,10 @@ async def get_lowest_stress_route(
             seq,
             edge as id,
             b.len_feet,
+            case 
+			    when linklts >= 3 then 'true' 
+				else 'false' 
+			end as high_stress,
             b.geom as geometry
         from
             pgr_dijkstra(
@@ -73,7 +77,7 @@ async def get_lowest_stress_route(
 
     return await postgis_query_to_geojson(
         query,
-        ["seq", "id", "len_feet", "geometry"],
+        ["seq", "id", "len_feet", "high_stress", "geometry"],
         DATABASE_URL,
     )
 
