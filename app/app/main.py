@@ -47,7 +47,7 @@ async def get_lowest_stress_route(
             edge as id,
             b.len_feet,
             case 
-			    when linklts >= 3 then 'true' 
+			    when linklts >= 0.6 then 'true' 
 				else 'false' 
 			end as high_stress,
             b.geom as geometry
