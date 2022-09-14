@@ -12,8 +12,18 @@ load_dotenv(find_dotenv())
 DATABASE_URL = os.getenv("DATABASE_URL", None)
 URL_PREFIX = os.getenv("URL_PREFIX", "")
 
-app = FastAPI(docs_url=URL_PREFIX)
+def custom_openapi():
+    if app.openapi_schema:
+        return app.openapi_schema
+    openapi_schema = get_openapi(
+        title="DVRPC Low-stress Bike Routes API",
+        version="1.0",
+        routes=app.routes,
+    )
+    app.openapi_schema = openapi_schema
+    return app.openapi_schema
 
+app = FastAPI(openapi_url=URL_PREFIX + "/openapi.json", docs_url=URL_PREFIX + "/docs")
 
 app.add_middleware(
     CORSMiddleware,
