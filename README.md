@@ -15,7 +15,7 @@ LOCAL_DATABASE_URL=postgresql://user:pass@localhost:5432/dbname
 REMOTE_DATABASE_URL=postgresql://user:pass@hostname:port/dbname
 SHP_PATH=/path/to/existing_conditions_lts.shp
 DATABASE_URL=postgresql://user:pass@localhost:5432/dbname
-# URL_PREFIX=/api/lowstress  # optional
+# URL_PREFIX=/api/lowstress/v1  # optional
 ```
 
 Note: the `DATABASE_URL` variable is used by the FastAPI app, and can point to a local or cloud-hosted database. It should be your `LOCAL_` or `REMOTE_` database URL.
