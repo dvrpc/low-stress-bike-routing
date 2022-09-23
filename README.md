@@ -1,6 +1,12 @@
 # low-stress-bike-routing
 
-This app is a FastAPI backend that provides low-stress bike routes for the DVRPC region using `pgrouting` queries within a `PostGIS` database. It uses DVRPC's [LTS GIS data](https://dvrpc-dvrpcgis.opendata.arcgis.com/datasets/dvrpcgis::bicycle-lts-network/about) as the analysis network.
+This API provides low-stress bike routes for the DVRPC region using `pgrouting` queries within a `PostGIS` database. It uses DVRPC's [LTS GIS data](https://dvrpc-dvrpcgis.opendata.arcgis.com/datasets/dvrpcgis::bicycle-lts-network/about) as the analysis network.
+
+Base URL: <https://cloud.dvrpc.org/api/lowstress/v1>
+
+Docs: <https://cloud.dvrpc.org/api/lowstress/v1/docs>
+
+See <https://github.com/dvrpc/cloud-ansible> for deployment.
 
 ## Requirements
 
@@ -54,8 +60,6 @@ You can then run the following command from within the new environment:
 ```bash
 uvicorn app.app.main:app --reload
 ```
-
-For web deployments, a `Dockerfile` is provided.
 
 ### Use the API
 
