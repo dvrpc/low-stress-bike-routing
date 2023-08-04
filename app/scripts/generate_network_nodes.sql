@@ -1,3 +1,4 @@
+drop table if exists lts_nodes;
 create table lts_nodes as (
     with temp_table as (
         select source as nodeid,
@@ -7,4 +8,4 @@ create table lts_nodes as (
     select nodeid, geom
     from temp_table
     group by nodeid, geom
-)
+);
