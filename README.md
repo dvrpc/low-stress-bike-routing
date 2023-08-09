@@ -6,7 +6,7 @@ Base URL: <https://cloud.dvrpc.org/api/lowstress/v1>
 
 Docs: <https://cloud.dvrpc.org/api/lowstress/v1/docs>
 
-See <https://github.com/dvrpc/cloud-ansible> for deployment.
+See <https://github.com/dvrpc/cloud-ansible> for deployment, including on how to update the database. 
 
 ## Requirements
 
@@ -26,9 +26,7 @@ DATABASE_URL=postgresql://user:pass@localhost:5432/dbname
 
 Note: the `DATABASE_URL` variable is used by the FastAPI app, and can point to a local or cloud-hosted database. It should be your `LOCAL_` or `REMOTE_` database URL.
 
-## Commands
-
-### Set up database
+## Creating the database
 
 Before running any code, make sure that the databases defined in `LOCAL_DATABASE_URL` and `REMOTE_DATABASE_URL` exist.
 
@@ -45,7 +43,7 @@ Once the raw data exists in the cloud database, you'll need to run another comma
 make create-secondary-tables
 ```
 
-### Run the API
+## Running the API in Development
 
 For local development, you'll need to create a Python environment and install dependencies.
 
@@ -60,8 +58,6 @@ You can then run the following command from within the new environment:
 ```bash
 uvicorn app.app.main:app --reload
 ```
-
-### Use the API
 
 The following URL pattern will return the lowest-stress route between any two nodes in the network as a geojson. In this example the route starts at node ID `735340` and ends at node ID `735389`.
 
