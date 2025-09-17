@@ -3,6 +3,7 @@ from dotenv import find_dotenv, load_dotenv
 
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.openapi.utils import get_openapi
 
 from .database import postgis_query_to_geojson
 
@@ -11,6 +12,7 @@ load_dotenv(find_dotenv())
 
 DATABASE_URL = os.getenv("DATABASE_URL", None)
 URL_PREFIX = os.getenv("URL_PREFIX", "")
+
 
 def custom_openapi():
     if app.openapi_schema:
@@ -22,6 +24,7 @@ def custom_openapi():
     )
     app.openapi_schema = openapi_schema
     return app.openapi_schema
+
 
 app = FastAPI(openapi_url=URL_PREFIX + "/openapi.json", docs_url=URL_PREFIX + "/docs")
 
